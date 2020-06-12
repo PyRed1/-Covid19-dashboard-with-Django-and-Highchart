@@ -1,5 +1,9 @@
 from django.shortcuts import render, HttpResponse,HttpResponseRedirect
 
+
+def home(request):
+    return render(request,'HighchartsPlot/home.html')
+
 import pandas as pd 
 
 
@@ -216,6 +220,28 @@ def DeathsRatesview(request):
     
     return render(request,'HighchartsPlot/postCountriesForm.html',context)
 
+recovered_df=process(recovered)
+def RecoveryCumulview(request):
+    if request.method=='POST':
+        form=CountriesForm(request.POST)
+        
+        if form.is_valid():
+            countries=form.cleaned_data['countries'].split(',')
+            # print(countries)
+            
+            data=[recovered_df[['timestamp',country]].values.tolist() for country in countries]
+            context={'data':data,'countries':countries}
+
+            return render(request,'HighchartsPlot/plot_countries.html',context)
+    
+    
+    else:
+        form = CountriesForm() # blank form when the method is GET OR OTHER    
+            
+    context={'form':form}
+    
+    return render(request,'HighchartsPlot/postCountriesForm.html',context)    
+
 def RecoveryRates(request):
     if request.method=='POST':
         form=CountriesForm(request.POST)
@@ -237,6 +263,27 @@ def RecoveryRates(request):
     return render(request,'HighchartsPlot/postCountriesForm.html',context)
 
 
+
+Recoveries_daily=from_cumul_to_daily(recovered)
+def RecoveriesDailyview(request):
+    if request.method=='POST':
+        form=CountriesForm(request.POST)
+        if form.is_valid():
+            countries=form.cleaned_data['countries'].split(',')
+            # print(countries)
+            
+            data=[Recoveries_daily[['timestamp',country]].values.tolist() for country in countries]
+            context={'data':data,'countries':countries}
+
+            return render(request,'HighchartsPlot/plot_countries.html',context)
+    
+    
+    else:
+        form = CountriesForm() # blank form when the method is GET OR OTHER    
+            
+    context={'form':form}
+    
+    return render(request,'HighchartsPlot/postCountriesForm.html',context)
 
 
 
