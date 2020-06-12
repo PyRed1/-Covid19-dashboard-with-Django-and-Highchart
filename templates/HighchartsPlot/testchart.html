@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <style>
+        #container {
+    min-width: 310px;
+    max-width: 800px;
+    height: 400px;
+    margin: 0 auto
+}
+
+    </style>
+
+
+</head>
+<body>
+    <div id="container"></div>
+    
+</body>
+<script>
+// var data = [
+//         [1524787200000, 164.33, 160.63],
+//         [1525046400000, 167.26, 161.84],
+//         [1525132800000, 169.2, 165.27],
+//         [1525219200000, 177.75, 173.8],
+//         [1525305600000, 177.5, 174.441]
+//     ],
+var data={{data|safe}} 
+    dataS1 = [],
+    dataS2 = [];
+
+data.forEach(function(el) {
+    dataS1.push([el[0], el[1]]);
+    dataS2.push([el[0], el[2]]);
+});
+
+Highcharts.stockChart('container', {
+    series: [{
+        data: dataS1
+    }, {
+        data: dataS2
+    }]
+});
+
+
+</script>
+</html>

@@ -1,0 +1,57 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <style>
+        #container {
+    min-width: 310px;
+    max-width: 800px;
+    height: 600px;
+    margin: 0 auto
+}
+
+    </style>
+
+
+</head>
+<body>
+
+
+    <div id="container"></div>
+    
+</body>
+<script>
+
+var countries={{countries|safe}}
+var num= {{countries|safe}}.length
+var data ={{data|safe}} 
+var arr = [];
+for(var i=0; i<num; i++) 
+   arr.push({name:countries[i],data:data[i]});
+
+
+Highcharts.stockChart('container', {
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+        valueSuffix: ' % percent',
+        shared: true
+    },
+    series:arr 
+    
+    // [{
+    //     name:'Morocco',
+    //     data:{{data1}}
+    // }, {name:'Algeria',
+    //     data: {{data2}}
+    // }]
+});
+
+
+</script>
+</html>
+
+
+
+

@@ -1,0 +1,103 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+    <style>
+        #container {
+    min-width: 310px;
+    max-width: 800px;
+    height: 600px;
+    margin: 0 auto
+}
+
+    </style>
+
+
+</head>
+<body>
+
+
+    <div id="container"></div>
+    
+</body>
+<script>
+// var data = [
+//         [1524787200000, 164.33, 160.63],
+//         [1525046400000, 167.26, 161.84],
+//         [1525132800000, 169.2, 165.27],
+//         [1525219200000, 177.75, 173.8],
+//         [1525305600000, 177.5, 174.441]
+//     ],
+var countries={{countries|safe}}
+var num= {{countries|safe}}.length
+var data ={{data|safe}} 
+var arr = [];
+for(var i=0; i<num; i++) 
+   arr.push({name:countries[i],data:data[i]});
+
+// console.log(arr)
+
+// see for more details https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/tooltip/pointformat/
+// OR https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/tooltip/pointformat/
+Highcharts.stockChart('container', {
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+        valueSuffix: ' cases',
+        shared: true
+    },
+    series:arr 
+    
+    // [{
+    //     name:'Morocco',
+    //     data:{{data1}}
+    // }, {name:'Algeria',
+    //     data: {{data2}}
+    // }]
+});
+
+
+</script>
+</html>
+
+
+
+
+<!-- <script>
+    // This script for other approch of plotting Hihgcharts plot 
+Highcharts.chart('container', {
+
+xAxis: {
+    categories: [1590883200000.0,
+1590969600000.0,
+1591056000000.0,
+1591142400000.0,
+1591228800000.0,
+1591315200000.0,
+1591401600000.0,
+1591488000000.0],
+labels: {
+            format: '{value:%e %b}'
+        }
+},
+
+tooltip: {
+    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+    headerFormat: '<span style="font-size: 10px">' + '{point.key:%e %b %Y}' + '</span><br/>',
+    valueSuffix: ' cases',
+    shared: true
+},
+
+series: [{
+    name: 'Morocco',
+    data: [7807, 7833, 7866, 7922, 8003, 8071, 8151, 8224]
+}, {
+    name: 'Egypt',
+    data:[24985, 26384, 27536, 28615, 29767, 31115, 32612, 34079] 
+}]
+
+});
+
+
+</script> -->
