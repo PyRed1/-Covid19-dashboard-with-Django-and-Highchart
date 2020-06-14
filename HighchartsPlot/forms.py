@@ -15,4 +15,4 @@ class myForm(forms.Form):
         ('US','united States'),
         ('Uk','United Kingdom')
     )
-    choicesList = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple,choices=OPTIONS)
+    choicesList = forms.MultipleChoiceField(choices=OPTIONS)

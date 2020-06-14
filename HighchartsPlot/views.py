@@ -298,7 +298,7 @@ def multipleChoiceview(request):
             return  HttpResponse(f'/Thanks you have choosen {items}')
     else:
         form = myForm()
-    # Countries=['Morocco','Algeria']    
+     
     context={'form':form}
     return render(request,'HighchartsPlot/render_choices.html', context=context)
 
