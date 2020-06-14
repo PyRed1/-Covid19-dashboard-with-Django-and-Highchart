@@ -295,11 +295,12 @@ def multipleChoiceview(request):
             items = form.cleaned_data.get('choicesList')
             # do something with your results
             print(items,type(items))
-            return  HttpResponse('/Thanks/')
+            return  HttpResponse(f'/Thanks you have choosen {items}')
     else:
         form = myForm()
+    # Countries=['Morocco','Algeria']    
     context={'form':form}
-    return render(request,'HighchartsPlot/render_choices.html', {'form': form})
+    return render(request,'HighchartsPlot/render_choices.html', context=context)
 
 
 def BSView(request):
