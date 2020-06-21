@@ -1,8 +1,7 @@
+<!-- <!doctype html> -->
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+<html>
     <script src="https://code.highcharts.com/stock/highstock.js"></script>
     <style>
         #container {
@@ -13,28 +12,33 @@
 }
 
     </style>
-
-
+<head>
+  <meta charset="utf-8">
+  <title>Django Highcharts Example</title>
 </head>
 <body>
-
-
     <div id="container"></div>
-    
-</body>
-<script>
+<script> 
+var arr={{arr|safe}}
 
-var countries={{countries|safe}}
-var num= {{countries|safe}}.length
-var data ={{data|safe}} 
-var arr = [];
-for(var i=0; i<num; i++) 
-   arr.push({name:countries[i],data:data[i]});
+function create_title(arr){ //this function returns string in format 'item1,item2,..and itemsn'
+    var countries=[];
+    arr.forEach(function(item) {
+    countries.push(item.name);
+    });
+    
+    
+    if(countries.length>1) 
+    {return `${countries.slice(0,-1).join(',')} and ${countries.slice(-1)}`}
+    else
+    {return countries[0]}
+    }
+
 
 
 Highcharts.stockChart('container', {
     title: {
-            text: `rates in ${countries}`
+            text: `Recovery Rates in ${create_title(arr)}`
         },
         rangeSelector : {
                 enabled: false //remove the zoom and the navigator
@@ -47,7 +51,7 @@ Highcharts.stockChart('container', {
         valueSuffix: ' % percent',
         shared: true
     },
-    series:arr 
+    series:arr
     // arr is an array of objects like below
     // [{
     //     name:'Morocco',
@@ -56,11 +60,7 @@ Highcharts.stockChart('container', {
     //     data:[[timestamp,value1],[timestamp,value2],[timestamp,value3]....]
     // }]
 });
-
-
-</script>
+   
+</script>    
+</body>
 </html>
-
-
-
-

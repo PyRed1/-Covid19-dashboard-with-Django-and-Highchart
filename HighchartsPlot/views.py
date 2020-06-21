@@ -307,3 +307,40 @@ def BSView(request):
     listCountries=[(1,'Mo'),(2,'Tu'),(3,'Al')]
     context={'listCountries':listCountries}   
     return render(request,'HighchartsPlot/render_choices.html',context)
+
+
+
+
+
+
+
+from django.http import JsonResponse
+
+def asyncRecoveryRates(request):
+    '''this view is like RecoverRates but uses json format of data to serve the Highcharts
+    js script'''
+    if request.method=='POST':
+        form=CountriesForm(request.POST)
+        if form.is_valid():
+            countries=form.cleaned_data['countries'].split(',')
+            # print(countries)
+             
+            # data=[Recovery_rates[['timestamp',country]].round(3).values.tolist() for country in countries]
+            
+
+            arr=[{'name':country,'data':Recovery_rates[['timestamp',country]].round(3).values.tolist()} for country in countries]
+
+            # return JsonResponse(arr,safe=False)
+            return render(request, 'HighchartsPlot/asyncPlot.html', {'arr': arr})
+    
+    
+    else:
+        form = CountriesForm() # blank form when the method is GET OR OTHER    
+            
+    context={'form':form}
+    
+    return render(request,'HighchartsPlot/postCountriesForm.html',context)
+
+
+def json_example(request):
+    return render(request,'HighchartsPlot/asyncPlot.html')
