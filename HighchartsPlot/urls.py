@@ -13,8 +13,12 @@ urlpatterns = [
     path('RecoveriesDaily', views.RecoveriesDailyview, name='RecoveriesDaily'),
     path('RecoveryRates', views.RecoveryRates, name='postRecoveryRates'),
     path('testMultiple', views.multipleChoiceview, name='testMultiple'),
-# this 2 urls for the json exempe see:
-# https://simpleisbetterthancomplex.com/tutorial/2018/04/03/how-to-integrate-highcharts-js-with-django.html
+    # this 2 urls for the json exempe see:
+    # https://simpleisbetterthancomplex.com/tutorial/2018/04/03/how-to-integrate-highcharts-js-with-django.html
     path('json-exemple', views.json_example, name='json_example'),
-    path('json-exemple/data', views.asyncRecoveryRates, name='asyncRecoveryRates')
+    path('json-exemple/data', views.asyncRecoveryRates, name='asyncRecoveryRates'),
+    # this for testing ajax with submitting button see
+    # https://www.youtube.com/watch?v=QDdLvImfq_g
+    path('ajax-exemple', views.ajaxview, name='ajaxview')
+
 ]

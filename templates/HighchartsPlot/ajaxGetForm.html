@@ -1,0 +1,78 @@
+<html lang="en">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.highcharts.com/stock/highstock.js"></script>
+
+    <style>
+        #container {
+    min-width: 310px;
+    max-width: 800px;
+    height: 600px;
+    margin: 0 auto
+    }   
+    </style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="get">
+        <p><label for="id_countries">Countries:</label> <input type="text" name="countries" maxlength="100" required="" id="id_countries"></p>
+        <input id="submitBt" type="submit" value="Submit">
+
+    </form> 
+
+    <div id="container"></div>
+
+    <script>
+
+
+        
+        
+        $.ajax({
+         method :'get',   
+         dataType: 'json', //mandatory 
+         url: "",
+         success: function(result){
+                     create_chart(result);
+                    }});
+
+
+
+
+function create_title(arr){ //this function returns string in format 'item1,item2,..and itemsn'
+            var countries=[];
+            arr.forEach(function(item) {
+            countries.push(item.name);
+            });
+
+
+            if(countries.length>1) 
+            {return `${countries.slice(0,-1).join(', ')} and ${countries.slice(-1)}`}
+            else
+            {return countries[0]}
+        }
+function create_chart(arr){
+        Highcharts.stockChart('container', {
+            title: {
+                    text: `Recovery Rates in ${create_title(arr)}`
+                },
+            rangeSelector : {
+                        enabled: false //remove the zoom and the navigator
+                    },
+            navigator: {
+                        enabled: false
+                    },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                valueSuffix: ' % percent',
+                shared: true
+            },
+            series:arr
+
+        });
+}                
+        
+    </script>
+</body>
+</html>

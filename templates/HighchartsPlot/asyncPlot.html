@@ -29,7 +29,7 @@ function create_title(arr){ //this function returns string in format 'item1,item
     
     
     if(countries.length>1) 
-    {return `${countries.slice(0,-1).join(',')} and ${countries.slice(-1)}`}
+    {return `${countries.slice(0,-1).join(', ')} and ${countries.slice(-1)}`}
     else
     {return countries[0]}
     }
@@ -52,13 +52,7 @@ Highcharts.stockChart('container', {
         shared: true
     },
     series:arr
-    // arr is an array of objects like below
-    // [{
-    //     name:'Morocco',
-    //     data:[[timestamp,value1],[timestamp,value2],[timestamp,value3]....]
-    // }, {name:'Algeria',
-    //     data:[[timestamp,value1],[timestamp,value2],[timestamp,value3]....]
-    // }]
+    
 });
    
 </script>    

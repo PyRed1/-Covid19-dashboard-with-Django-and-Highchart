@@ -316,23 +316,21 @@ def BSView(request):
 
 from django.http import JsonResponse
 
-def asyncRecoveryRates(request):
-    '''this view is like RecoverRates but uses json format of data to serve the Highcharts
-    js script'''
+
+    
+
+
+import json 
+def json_example(request):
     if request.method=='POST':
         form=CountriesForm(request.POST)
         if form.is_valid():
             countries=form.cleaned_data['countries'].split(',')
-            # print(countries)
-             
-            # data=[Recovery_rates[['timestamp',country]].round(3).values.tolist() for country in countries]
-            
-
+            request.session['countries']='hello'
             arr=[{'name':country,'data':Recovery_rates[['timestamp',country]].round(3).values.tolist()} for country in countries]
-
             # return JsonResponse(arr,safe=False)
-            return render(request, 'HighchartsPlot/asyncPlot.html', {'arr': arr})
-    
+            dump = json.dumps(arr)
+            return render(request, 'HighchartsPlot/asyncPlot1.html',{'data':dump})
     
     else:
         form = CountriesForm() # blank form when the method is GET OR OTHER    
@@ -342,5 +340,43 @@ def asyncRecoveryRates(request):
     return render(request,'HighchartsPlot/postCountriesForm.html',context)
 
 
-def json_example(request):
-    return render(request,'HighchartsPlot/asyncPlot.html')
+    countries=session.request.get('countries',None)
+    print(countries)
+            
+        
+
+    
+
+
+def asyncRecoveryRates(request):
+    '''this view is like RecoverRates but uses json format of data to serve the Highcharts
+    js script'''
+    
+    print(request.session.get('countries',None))    
+    return render(request, 'HighchartsPlot/asyncPlot1.html')
+
+    
+    
+
+
+
+def ajaxview(request):
+    '''the best strategy for using highcharts with ajax GET request inspired from
+    https://www.youtube.com/watch?v=QDdLvImfq_g 
+    https://simpleisbetterthancomplex.com/tutorial/2018/04/03/how-to-integrate-highcharts-js-with-django.html
+    the approch consists of creating arr WANTED BY Highcharts function in the exact way
+    that needed by the function see the documentation, and response by JsonResponse 
+    with this array'''
+    if request.is_ajax():
+        items=request.GET.get('countries')
+        countries=items.split(',')
+        arr=[{'name':country,'data':Recovery_rates[['timestamp',country]].round(3).values.tolist()} for country in countries]
+
+        # print(items)
+        return JsonResponse(arr,safe=False)
+    # else:
+    #     form = CountriesForm()
+     
+    return render(request,'HighchartsPlot/ajaxGetForm.html')
+
+
