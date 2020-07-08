@@ -22,6 +22,9 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
 
 
@@ -37,7 +40,7 @@
 
     
         
-    <form method='post'>
+    <form method='post' >
          {% csrf_token %}
         
         {{ form }}   
@@ -48,6 +51,11 @@
 <script>
     //$('select').selectpicker();
     $('#id_choicesList').select2();
+    
+    $('select').select2({
+                placeholder: 'Choose a list of Countries',
+                allowClear: true
+                });
     $('.select2').width('50%');
 </script>
 
